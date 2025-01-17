@@ -13,11 +13,13 @@ class SearchPhotoView: BaseView {
     let photoSearchBar = UISearchBar()
     let sortButton = UIButton()
     let mainLabel = UILabel()
+    lazy var photoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
     override func configureHierarchy() {
         addSubview(photoSearchBar)
         addSubview(sortButton)
         addSubview(mainLabel)
+        addSubview(photoCollectionView)
     }
     
     override func configureLayout() {
@@ -27,7 +29,7 @@ class SearchPhotoView: BaseView {
         }
         
         sortButton.snp.makeConstraints { make in
-            make.top.equalTo(photoSearchBar.snp.bottom).offset(10)
+            make.top.equalTo(photoSearchBar.snp.bottom).offset(4)
             make.trailing.equalToSuperview().offset(14)
             make.height.equalTo(30)
         }
@@ -35,6 +37,11 @@ class SearchPhotoView: BaseView {
         mainLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.height.equalTo(21)
+        }
+        
+        photoCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(sortButton.snp.bottom).offset(4)
+            make.bottom.horizontalEdges.equalToSuperview()
         }
     }
     
@@ -49,5 +56,22 @@ class SearchPhotoView: BaseView {
         // 검색 결과에 따라 변경 예정
         mainLabel.text = "사진을 검색해보세요."
         mainLabel.font = .boldSystemFont(ofSize: 17)
+        
+        photoCollectionView.backgroundColor = .red
+    }
+    
+    func createCollectionViewLayout() -> UICollectionViewLayout {
+        let sectionInset: CGFloat = 10
+        let cellSpacing: CGFloat = 2
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let deviceWidth = UIScreen.main.bounds.width
+        let cellWidth = deviceWidth - (sectionInset * 2) - (cellSpacing)
+        
+        layout.itemSize = CGSize(width: cellWidth / 2, height: (cellWidth / 2) * 1.5)
+        layout.sectionInset = UIEdgeInsets(top: sectionInset, left: 0, bottom: sectionInset, right: 0)
+        return layout
     }
 }
