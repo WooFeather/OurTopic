@@ -111,4 +111,6 @@ iOSInjectionProject/
 **/.DS_Store
 **/._.DS_Store
 
+APIKey.swift
+
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapods
