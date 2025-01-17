@@ -1,5 +1,5 @@
 //
-//  BaseViewController.swift
+//  BaseView.swift
 //  OurTopic
 //
 //  Created by 조우현 on 1/17/25.
@@ -7,25 +7,25 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+class BaseView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        print(#function)
         configureHierarchy()
         configureLayout()
         configureView()
-        configureEssential()
     }
     
     func configureHierarchy() { }
     
     func configureLayout() { }
     
-    func configureView() {
-        view.backgroundColor = .white
-    }
+    func configureView() { }
     
     func configureEssential() { }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
