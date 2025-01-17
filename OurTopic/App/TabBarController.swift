@@ -13,9 +13,12 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         configureTabBarController()
+        setupTabBarAppearance()
     }
     
     func configureTabBarController() {
+        tabBar.delegate = self
+        
         let firstVC = TopicViewController()
         let secondVC = SecondViewController()
         let thirdVC = SearchPhotoViewController()
@@ -32,5 +35,14 @@ class TabBarController: UITabBarController {
         let fourthNav = UINavigationController(rootViewController: fourthVC)
         
         setViewControllers([firstNav, secondNav, thirdNav, fourthNav], animated: true)
+    }
+    
+    func setupTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.backgroundColor = .white
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+        tabBar.tintColor = .black
     }
 }

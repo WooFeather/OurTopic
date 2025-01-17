@@ -12,7 +12,7 @@ class FourthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        navigationItem.title = "네번째 탭바입니당"
     }
     
 
