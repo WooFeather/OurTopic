@@ -16,9 +16,6 @@ class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     var photoImageView = UIImageView()
     let starButton = UIButton()
     
-    // 네트워킹 이후 수정 예정
-    var starCount = 0
-    
     override func configureHierarchy() {
         contentView.addSubview(photoImageView)
         contentView.addSubview(starButton)
@@ -41,8 +38,6 @@ class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
         photoImageView.contentMode = .scaleAspectFill
         photoImageView.clipsToBounds = true
         
-        let formattedCount = NumberFormattingManager.shared.numberFormatting(number: starCount)
-        starButton.setTitle("\(formattedCount ?? "")", for: .normal)
         starButton.setTitleColor(.white, for: .normal)
         starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         starButton.tintColor = .yellow
@@ -53,7 +48,8 @@ class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     }
     
     func configureData(data: PhotoDetail) {
+        let formattedCount = NumberFormattingManager.shared.numberFormatting(number: data.likes)
         photoImageView.kf.setImage(with: URL(string: data.urls.thumb))
-        starCount = data.likes
+        starButton.setTitle("\(formattedCount ?? "")", for: .normal)
     }
 }

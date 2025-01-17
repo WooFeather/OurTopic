@@ -27,7 +27,7 @@ class NetworkManager {
                 
                 switch response.result {
                 case .success(let value):
-                    print("✅SUCCESS")
+                    print("✅SUCCESS", value.totalCount)
                     completionHandler(value)
                 case .failure(let error):
                     print(error)

@@ -12,6 +12,9 @@ class SearchPhotoViewController: BaseViewController {
     var searchPhotoView = SearchPhotoView()
     var list: [PhotoDetail] = []
     
+    var page = 1
+    var maxNum = 0
+    
     override func loadView() {
         view = searchPhotoView
     }
@@ -25,9 +28,20 @@ class SearchPhotoViewController: BaseViewController {
     }
     
     func callRequest(query: String) {
-        NetworkManager.shared.callSearchPhotoAPI(query: query, page: 1, sort: .relevant) { value in
-            self.list = value.results
+        NetworkManager.shared.callSearchPhotoAPI(query: query, page: page, sort: .relevant) { value in
+            
+            if self.page == 1 {
+                self.list = value.results
+            } else {
+                self.list.append(contentsOf: value.results)
+            }
+            
+            self.maxNum = value.totalCount
             self.searchPhotoView.photoCollectionView.reloadData()
+            
+            if self.page == 1 && self.list.count != 0 {
+                self.searchPhotoView.photoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            }
         }
     }
 }
@@ -35,6 +49,18 @@ class SearchPhotoViewController: BaseViewController {
 extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         print("🔗indexPath야 \(indexPaths)")
+        var queryText = searchPhotoView.photoSearchBar.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        
+        for item in indexPaths {
+            if list.count - 3 == item.item {
+                if list.count < maxNum {
+                    page += 1
+                    callRequest(query: queryText)
+                } else {
+                    print("❗️마지막 페이지야!!")
+                }
+            }
+        }
     }
 }
 
@@ -65,7 +91,8 @@ extension SearchPhotoViewController: UISearchBarDelegate {
                 self.dismiss(animated: true)
             }
         } else {
-            callRequest(query: "flower")
+            page = 1
+            callRequest(query: trimmingText)
         }
         
         view.endEditing(true)

@@ -58,7 +58,7 @@ class SearchPhotoView: BaseView {
         mainLabel.font = .boldSystemFont(ofSize: 17)
         
         photoCollectionView.register(SearchPhotoCollectionViewCell.self, forCellWithReuseIdentifier: SearchPhotoCollectionViewCell.id)
-//        photoCollectionView.backgroundColor = .gray
+        photoCollectionView.keyboardDismissMode = .onDrag
     }
     
     func createCollectionViewLayout() -> UICollectionViewLayout {

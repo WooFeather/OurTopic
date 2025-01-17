@@ -8,16 +8,29 @@
 import Foundation
 
 struct Photo: Decodable {
-    let total: Int
+    let totalCount: Int
     let results: [PhotoDetail]
+    
+    enum CodingKeys: String, CodingKey {
+        case totalCount = "total"
+        case results
+    }
 }
 
 struct PhotoDetail: Decodable {
-    let created_at: String // "2021-06-08T19:48:47Z"
+    let postDate: String // "2021-06-08T19:48:47Z"
     let width: Int
     let height: Int
     let urls: PhotoURL
     let likes: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case postDate = "created_at"
+        case width
+        case height
+        case urls
+        case likes
+    }
 }
 
 struct PhotoURL: Decodable {
