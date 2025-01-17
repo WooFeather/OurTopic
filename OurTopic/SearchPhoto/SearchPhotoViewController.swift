@@ -18,6 +18,27 @@ class SearchPhotoViewController: BaseViewController {
     override func configureEssential() {
         navigationItem.title = "SEARCH PHOTO"
         searchPhotoView.photoSearchBar.delegate = self
+        searchPhotoView.photoCollectionView.delegate = self
+        searchPhotoView.photoCollectionView.dataSource = self
+        searchPhotoView.photoCollectionView.prefetchDataSource = self
+    }
+}
+
+extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print("🔗indexPath야 \(indexPaths)")
+    }
+}
+
+extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 100
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = searchPhotoView.photoCollectionView.dequeueReusableCell(withReuseIdentifier: SearchPhotoCollectionViewCell.id, for: indexPath) as? SearchPhotoCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
     }
 }
 

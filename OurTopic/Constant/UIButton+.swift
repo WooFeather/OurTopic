@@ -21,4 +21,12 @@ extension UIButton.Configuration {
         configuration.baseForegroundColor = .black
         return configuration
     }
+    
+    static func starButtonStyle() -> UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 10)
+        configuration.preferredSymbolConfigurationForImage = imageConfig
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12)
+        return configuration
+    }
 }

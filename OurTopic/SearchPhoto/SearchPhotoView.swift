@@ -57,12 +57,13 @@ class SearchPhotoView: BaseView {
         mainLabel.text = "사진을 검색해보세요."
         mainLabel.font = .boldSystemFont(ofSize: 17)
         
-        photoCollectionView.backgroundColor = .red
+        photoCollectionView.register(SearchPhotoCollectionViewCell.self, forCellWithReuseIdentifier: SearchPhotoCollectionViewCell.id)
+//        photoCollectionView.backgroundColor = .gray
     }
     
     func createCollectionViewLayout() -> UICollectionViewLayout {
-        let sectionInset: CGFloat = 10
-        let cellSpacing: CGFloat = 2
+        let sectionInset: CGFloat = 0
+        let cellSpacing: CGFloat = 10
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -71,7 +72,7 @@ class SearchPhotoView: BaseView {
         let cellWidth = deviceWidth - (sectionInset * 2) - (cellSpacing)
         
         layout.itemSize = CGSize(width: cellWidth / 2, height: (cellWidth / 2) * 1.5)
-        layout.sectionInset = UIEdgeInsets(top: sectionInset, left: 0, bottom: sectionInset, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: sectionInset, left: sectionInset, bottom: sectionInset, right: sectionInset)
         return layout
     }
 }
