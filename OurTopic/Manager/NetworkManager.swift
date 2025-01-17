@@ -13,17 +13,25 @@ class NetworkManager {
     
     private init() { }
     
-    func callSearchPhotoAPI(query: String, page: Int, sort: RequestSort) {
+    func callSearchPhotoAPI(query: String, page: Int, sort: RequestSort, completionHandler: @escaping (Photo) -> Void) {
         let url = "https://api.unsplash.com/search/photos?query=\(query)&page=\(page)&per_page=20&order_by=\(sort)"
         let header: HTTPHeaders = [
-            // 추후작성예정
+            "Authorization": APIKey.unsplashAccessKey
         ]
         print(#function, url)
         
         AF.request(url, method: .get, headers: header)
             .validate(statusCode: 200..<500)
-            .responseString { response in
-                print(response)
+            .responseDecodable(of: Photo.self) { response in
+                print(response.response?.statusCode ?? 000)
+                
+                switch response.result {
+                case .success(let value):
+                    print("✅SUCCESS")
+                    completionHandler(value)
+                case .failure(let error):
+                    print(error)
+                }
             }
     }
 }

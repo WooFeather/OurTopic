@@ -7,16 +7,17 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "SearchPhotoCollectionViewCell"
     
-    let photoImageView = UIImageView()
+    var photoImageView = UIImageView()
     let starButton = UIButton()
     
     // 네트워킹 이후 수정 예정
-    var starCount = 3800
+    var starCount = 0
     
     override func configureHierarchy() {
         contentView.addSubview(photoImageView)
@@ -37,6 +38,8 @@ class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
     
     override func configureView() {
         photoImageView.backgroundColor = .brown
+        photoImageView.contentMode = .scaleAspectFill
+        photoImageView.clipsToBounds = true
         
         let formattedCount = NumberFormattingManager.shared.numberFormatting(number: starCount)
         starButton.setTitle("\(formattedCount ?? "")", for: .normal)
@@ -47,5 +50,10 @@ class SearchPhotoCollectionViewCell: BaseCollectionViewCell {
         starButton.backgroundColor = .starBackground
         starButton.configuration = .starButtonStyle()
         starButton.isUserInteractionEnabled = false
+    }
+    
+    func configureData(data: PhotoDetail) {
+        photoImageView.kf.setImage(with: URL(string: data.urls.thumb))
+        starCount = data.likes
     }
 }

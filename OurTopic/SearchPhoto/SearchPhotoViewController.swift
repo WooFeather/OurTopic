@@ -10,6 +10,7 @@ import UIKit
 class SearchPhotoViewController: BaseViewController {
     
     var searchPhotoView = SearchPhotoView()
+    var list: [PhotoDetail] = []
     
     override func loadView() {
         view = searchPhotoView
@@ -22,6 +23,13 @@ class SearchPhotoViewController: BaseViewController {
         searchPhotoView.photoCollectionView.dataSource = self
         searchPhotoView.photoCollectionView.prefetchDataSource = self
     }
+    
+    func callRequest(query: String) {
+        NetworkManager.shared.callSearchPhotoAPI(query: query, page: 1, sort: .relevant) { value in
+            self.list = value.results
+            self.searchPhotoView.photoCollectionView.reloadData()
+        }
+    }
 }
 
 extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
@@ -32,11 +40,14 @@ extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
 
 extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = searchPhotoView.photoCollectionView.dequeueReusableCell(withReuseIdentifier: SearchPhotoCollectionViewCell.id, for: indexPath) as? SearchPhotoCollectionViewCell else { return UICollectionViewCell() }
+        
+        let data = list[indexPath.row]
+        cell.configureData(data: data)
         
         return cell
     }
@@ -54,7 +65,7 @@ extension SearchPhotoViewController: UISearchBarDelegate {
                 self.dismiss(animated: true)
             }
         } else {
-            // trimmingText로 검색요청
+            callRequest(query: "flower")
         }
         
         view.endEditing(true)
