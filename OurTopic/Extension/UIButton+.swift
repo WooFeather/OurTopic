@@ -11,13 +11,11 @@ extension UIButton.Configuration {
     static func sortButtonStyle() -> UIButton.Configuration {
         var configuration = UIButton.Configuration.plain()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 10)
-        // enum으로 두 가지 정렬 이름 들어갈 예정
-        configuration.title = "최신순  "
         configuration.image = UIImage(systemName: "arrow.up.arrow.down.square")
         configuration.preferredSymbolConfigurationForImage = imageConfig
         configuration.imagePlacement = .leading
         configuration.cornerStyle = .capsule
-        configuration.baseBackgroundColor = .red
+        configuration.baseBackgroundColor = .white
         configuration.baseForegroundColor = .black
         return configuration
     }

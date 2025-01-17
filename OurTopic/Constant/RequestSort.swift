@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RequestSort {
-    case relevant
-    case latest
+enum RequestSort: String {
+    case relevant = "관련순"
+    case latest = "최신순"
 }

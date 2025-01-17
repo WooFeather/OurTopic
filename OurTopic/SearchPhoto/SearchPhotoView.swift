@@ -30,7 +30,7 @@ class SearchPhotoView: BaseView {
         
         sortButton.snp.makeConstraints { make in
             make.top.equalTo(photoSearchBar.snp.bottom).offset(4)
-            make.trailing.equalToSuperview().offset(14)
+            make.trailing.equalToSuperview().offset(12)
             make.height.equalTo(30)
         }
         
@@ -49,6 +49,8 @@ class SearchPhotoView: BaseView {
         photoSearchBar.placeholder = "키워드 검색"
         
         sortButton.configuration = .sortButtonStyle()
+        sortButton.setTitle(RequestSort.relevant.rawValue, for: .normal)
+        sortButton.setTitle(RequestSort.latest.rawValue, for: .selected)
         sortButton.layer.cornerRadius = 16
         sortButton.layer.borderColor = UIColor.lightGray.cgColor
         sortButton.layer.borderWidth = 1

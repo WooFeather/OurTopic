@@ -15,6 +15,8 @@ class SearchPhotoViewController: BaseViewController {
     var page = 1
     var maxNum = 0
     
+    lazy var queryText = searchPhotoView.photoSearchBar.text?.trimmingCharacters(in: .whitespaces) ?? ""
+    
     override func loadView() {
         view = searchPhotoView
     }
@@ -25,10 +27,25 @@ class SearchPhotoViewController: BaseViewController {
         searchPhotoView.photoCollectionView.delegate = self
         searchPhotoView.photoCollectionView.dataSource = self
         searchPhotoView.photoCollectionView.prefetchDataSource = self
+        
+        searchPhotoView.sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     
-    func callRequest(query: String) {
-        NetworkManager.shared.callSearchPhotoAPI(query: query, page: page, sort: .relevant) { value in
+    @objc
+    func sortButtonTapped() {
+        searchPhotoView.sortButton.isSelected.toggle()
+        
+        if searchPhotoView.sortButton.isSelected {
+            page = 1
+            callRequest(query: queryText, sort: .latest)
+        } else {
+            page = 1
+            callRequest(query: queryText, sort: .relevant)
+        }
+    }
+    
+    func callRequest(query: String, sort: RequestSort) {
+        NetworkManager.shared.callSearchPhotoAPI(query: query, page: page, sort: sort) { value in
             
             if self.page == 1 {
                 self.list = value.results
@@ -49,13 +66,16 @@ class SearchPhotoViewController: BaseViewController {
 extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         print("🔗indexPath야 \(indexPaths)")
-        var queryText = searchPhotoView.photoSearchBar.text?.trimmingCharacters(in: .whitespaces) ?? ""
         
         for item in indexPaths {
             if list.count - 3 == item.item {
                 if list.count < maxNum {
                     page += 1
-                    callRequest(query: queryText)
+                    if searchPhotoView.sortButton.isSelected {
+                        callRequest(query: queryText, sort: .latest)
+                    } else {
+                        callRequest(query: queryText, sort: .relevant)
+                    }
                 } else {
                     print("❗️마지막 페이지야!!")
                 }
@@ -84,15 +104,19 @@ extension SearchPhotoViewController: UISearchBarDelegate {
         print(#function)
         guard let searchText = searchBar.text else { return }
         
-        let trimmingText = searchText.trimmingCharacters(in: .whitespaces)
+        queryText = searchText.trimmingCharacters(in: .whitespaces)
         
-        if trimmingText.count < 2 {
+        if queryText.count < 2 {
             showAlert(title: "검색어를 다시 확인해주세요😭", message: "검색어는 2글자 이상이어야 합니다.", button: "확인") {
                 self.dismiss(animated: true)
             }
         } else {
             page = 1
-            callRequest(query: trimmingText)
+            if searchPhotoView.sortButton.isSelected {
+                callRequest(query: queryText, sort: .latest)
+            } else {
+                callRequest(query: queryText, sort: .relevant)
+            }
         }
         
         view.endEditing(true)
