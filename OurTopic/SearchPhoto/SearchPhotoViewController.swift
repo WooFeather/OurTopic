@@ -18,6 +18,8 @@ class SearchPhotoViewController: BaseViewController {
     }
     
     override func configureView() {
-        view.backgroundColor = .blue
+        super.configureView()
+        
+        navigationItem.title = "SEATCH PHOTO"
     }
 }

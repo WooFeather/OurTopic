@@ -16,8 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let nav = UINavigationController(rootViewController: SearchPhotoViewController())
-        window?.rootViewController = nav
+        let initialViewController = TabBarController()
+        window?.rootViewController = initialViewController
         window?.makeKeyAndVisible()
     }
 
