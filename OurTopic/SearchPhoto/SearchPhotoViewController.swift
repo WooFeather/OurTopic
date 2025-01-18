@@ -21,14 +21,6 @@ class SearchPhotoViewController: BaseViewController {
         view = searchPhotoView
     }
     
-    // 다른 탭바에 이동했다가 왔을 때
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        searchPhotoView.photoCollectionView.isHidden = true
-        searchPhotoView.mainLabel.text = "사진을 검색해보세요."
-        searchPhotoView.photoSearchBar.text = ""
-    }
-    
     override func configureEssential() {
         navigationItem.title = "SEARCH PHOTO"
         searchPhotoView.photoSearchBar.delegate = self
@@ -115,10 +107,24 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = searchPhotoView.photoCollectionView.dequeueReusableCell(withReuseIdentifier: SearchPhotoCollectionViewCell.id, for: indexPath) as? SearchPhotoCollectionViewCell else { return UICollectionViewCell() }
         
-        let data = list[indexPath.row]
+        let data = list[indexPath.item]
         cell.configureData(data: data)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = list[indexPath.item]
+        
+        let vc = PhotoDetailViewController()
+        vc.imageURLContents = data.urls.full
+        vc.imageWidthContents = data.width
+        vc.imageHeightContents = data.height
+        vc.postDateContents = data.postDate
+        vc.userNameContents = data.user.name
+        vc.userProfileImageContents = data.user.profileImage.image
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

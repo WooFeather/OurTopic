@@ -9,21 +9,32 @@ import UIKit
 
 class PhotoDetailViewController: BaseViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var imageURLContents: String?
+    var imageWidthContents: Int?
+    var imageHeightContents: Int?
+    var postDateContents: String?
+    var userNameContents: String?
+    var userProfileImageContents: String?
+    
+    var photoDetailView = PhotoDetailView()
+    
+    override func loadView() {
+        view = photoDetailView
+    }
 
-        // Do any additional setup after loading the view.
+    override func configureHierarchy() {
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func configureLayout() {
+        
     }
-    */
-
+    
+    override func configureView() {
+        super.configureView()
+    }
+    
+    override func configureEssential() {
+        
+    }
 }
