@@ -40,15 +40,10 @@ class TopicViewController: BaseViewController {
         let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
         var lists = [firstList, secondList, thirdList]
         
-//        for i in 0..<topicQuery.count {
-//            NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[i]) { value in
-//                lists[i] = value
-//            }
-//        }
-        
-        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[0]) { value in
-            self.firstList = value
-            print(self.firstList.count)
+        for i in 0..<topicQuery.count {
+            NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[i]) { value in
+                lists[i] = value
+            }
         }
     }
 }
@@ -56,17 +51,37 @@ class TopicViewController: BaseViewController {
 
 extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return firstList.count
+        if collectionView == self.topicView.firstTopicCollectionView {
+            return firstList.count
+        } else if collectionView == self.topicView.secondTopicCollectionView {
+            return secondList.count
+        } else {
+            return thirdList.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let firstCell = topicView.firstTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
-        
-        let data = firstList[indexPath.item]
-        firstCell.configureData(data: data)
-        
-        return firstCell
+        if collectionView == self.topicView.firstTopicCollectionView {
+            guard let cell = topicView.firstTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
+            
+            let data = firstList[indexPath.item]
+            cell.configureData(data: data)
+            
+            return cell
+        } else if collectionView == self.topicView.secondTopicCollectionView {
+            guard let cell = topicView.secondTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
+            
+            let data = secondList[indexPath.item]
+            cell.configureData(data: data)
+            
+            return cell
+        } else {
+            guard let cell = topicView.thirdTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
+            
+            let data = thirdList[indexPath.item]
+            cell.configureData(data: data)
+            
+            return cell
+        }
     }
-    
-    
 }
