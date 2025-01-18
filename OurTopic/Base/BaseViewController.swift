@@ -13,15 +13,9 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         
         print(#function)
-        configureHierarchy()
-        configureLayout()
         configureView()
         configureEssential()
     }
-    
-    func configureHierarchy() { }
-    
-    func configureLayout() { }
     
     func configureView() {
         view.backgroundColor = .white

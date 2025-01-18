@@ -10,6 +10,7 @@ import Kingfisher
 
 class PhotoDetailViewController: BaseViewController {
 
+    var idContents: String?
     var imageURLContents: String?
     var imageWidthContents: Int?
     var imageHeightContents: Int?
@@ -17,18 +18,19 @@ class PhotoDetailViewController: BaseViewController {
     var userNameContents: String?
     var userProfileImageContents: String?
     
+    var monthViews = 0
+    var monthDownloads = 0
+    
     var photoDetailView = PhotoDetailView()
     
     override func loadView() {
         view = photoDetailView
     }
-
-    override func configureHierarchy() {
-        
-    }
     
-    override func configureLayout() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        callRequest()
     }
     
     override func configureView() {
@@ -41,7 +43,27 @@ class PhotoDetailViewController: BaseViewController {
         photoDetailView.sizeLabel.text = "\(imageWidthContents ?? 0) x \(imageHeightContents ?? 0)"
     }
     
-    override func configureEssential() {
+    func callRequest() {
+        guard let id = idContents else {
+            print("id 가져오기 실패")
+            return
+        }
         
+        NetworkManager.shared.callPhotoStatisticsAPI(id: id) { value in
+            
+            for i in 0..<value.views.historical.values.count {
+                self.monthViews += value.views.historical.values[i].value
+            }
+            
+            let formattedViews = NumberFormattingManager.shared.numberFormatting(number: self.monthViews)
+            self.photoDetailView.viewsLabel.text = "\(formattedViews ?? "")"
+            
+            for i in 0..<value.downloads.historical.values.count {
+                self.monthDownloads += value.downloads.historical.values[i].value
+            }
+            
+            let formattedDownloads = NumberFormattingManager.shared.numberFormatting(number: self.monthDownloads)
+            self.photoDetailView.downloadLabel.text = "\(formattedDownloads ?? "")"
+        }
     }
 }

@@ -40,7 +40,7 @@ class SearchPhotoViewController: BaseViewController {
         searchPhotoView.sortButton.isSelected.toggle()
         
         if queryText.isEmpty || searchPhotoView.photoCollectionView.isHidden {
-            print("이때는 통신 노노")
+            print("네트워크 통신 시도 X")
         } else {
             if searchPhotoView.sortButton.isSelected {
                 page = 1
@@ -80,7 +80,7 @@ class SearchPhotoViewController: BaseViewController {
 
 extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print("🔗indexPath야 \(indexPaths)")
+        print("🔗indexPath \(indexPaths)")
         
         for item in indexPaths {
             if list.count - 3 == item.item {
@@ -92,7 +92,7 @@ extension SearchPhotoViewController: UICollectionViewDataSourcePrefetching {
                         callRequest(query: queryText, sort: .relevant)
                     }
                 } else {
-                    print("❗️마지막 페이지야!!")
+                    print("❗️마지막 페이지")
                 }
             }
         }
@@ -117,6 +117,8 @@ extension SearchPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         let data = list[indexPath.item]
         
         let vc = PhotoDetailViewController()
+        
+        vc.idContents = data.id
         vc.imageURLContents = data.urls.full
         vc.imageWidthContents = data.width
         vc.imageHeightContents = data.height

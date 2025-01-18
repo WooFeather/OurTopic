@@ -55,7 +55,6 @@ class SearchPhotoView: BaseView {
         sortButton.layer.borderColor = UIColor.lightGray.cgColor
         sortButton.layer.borderWidth = 1
         
-        // 검색 결과에 따라 변경 예정
         mainLabel.text = "사진을 검색해보세요."
         mainLabel.font = .boldSystemFont(ofSize: 17)
         

@@ -108,7 +108,6 @@ class PhotoDetailView: BaseView {
         
         profileNameLabel.font = .systemFont(ofSize: 16)
         
-        postDateLabel.text = "2024년 7월 3일 게시됨"
         postDateLabel.font = .systemFont(ofSize: 12, weight: .heavy)
         
         photoImageView.backgroundColor = .gray
@@ -127,15 +126,12 @@ class PhotoDetailView: BaseView {
         infoDownloadLabel.text = "다운로드"
         infoDownloadLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         
-        sizeLabel.text = "3089 x 3872"
         sizeLabel.font = .systemFont(ofSize: 14, weight: .bold)
         sizeLabel.textColor = .gray
         
-        viewsLabel.text = "1,548,623"
         viewsLabel.font = .systemFont(ofSize: 14, weight: .bold)
         viewsLabel.textColor = .gray
         
-        downloadLabel.text = "548,623"
         downloadLabel.font = .systemFont(ofSize: 14, weight: .bold)
         downloadLabel.textColor = .gray
     }

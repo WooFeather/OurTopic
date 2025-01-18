@@ -18,7 +18,8 @@ struct Photo: Decodable {
 }
 
 struct PhotoDetail: Decodable {
-    let postDate: String // "2021-06-08T19:48:47Z"
+    let id: String
+    let postDate: String
     let width: Int
     let height: Int
     let urls: PhotoURL
@@ -26,6 +27,7 @@ struct PhotoDetail: Decodable {
     let user: User
     
     enum CodingKeys: String, CodingKey {
+        case id
         case postDate = "created_at"
         case width
         case height
