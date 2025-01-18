@@ -21,6 +21,14 @@ class SearchPhotoViewController: BaseViewController {
         view = searchPhotoView
     }
     
+    // 다른 탭바에 이동했다가 왔을 때
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchPhotoView.photoCollectionView.isHidden = true
+        searchPhotoView.mainLabel.text = "사진을 검색해보세요."
+        searchPhotoView.photoSearchBar.text = ""
+    }
+    
     override func configureEssential() {
         navigationItem.title = "SEARCH PHOTO"
         searchPhotoView.photoSearchBar.delegate = self
@@ -29,18 +37,26 @@ class SearchPhotoViewController: BaseViewController {
         searchPhotoView.photoCollectionView.prefetchDataSource = self
         
         searchPhotoView.sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        
+        if list.isEmpty {
+            searchPhotoView.photoCollectionView.isHidden = true
+        }
     }
     
     @objc
     func sortButtonTapped() {
         searchPhotoView.sortButton.isSelected.toggle()
         
-        if searchPhotoView.sortButton.isSelected {
-            page = 1
-            callRequest(query: queryText, sort: .latest)
+        if queryText.isEmpty || searchPhotoView.photoCollectionView.isHidden {
+            print("이때는 통신 노노")
         } else {
-            page = 1
-            callRequest(query: queryText, sort: .relevant)
+            if searchPhotoView.sortButton.isSelected {
+                page = 1
+                callRequest(query: queryText, sort: .latest)
+            } else {
+                page = 1
+                callRequest(query: queryText, sort: .relevant)
+            }
         }
     }
     
@@ -51,6 +67,13 @@ class SearchPhotoViewController: BaseViewController {
                 self.list = value.results
             } else {
                 self.list.append(contentsOf: value.results)
+            }
+            
+            if self.list.isEmpty {
+                self.searchPhotoView.photoCollectionView.isHidden = true
+                self.searchPhotoView.mainLabel.text = "검색결과가 없어요."
+            } else {
+                self.searchPhotoView.photoCollectionView.isHidden = false
             }
             
             self.maxNum = value.totalCount
