@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PhotoDetailViewController: BaseViewController {
 
@@ -32,6 +33,12 @@ class PhotoDetailViewController: BaseViewController {
     
     override func configureView() {
         super.configureView()
+        
+        photoDetailView.profileImageView.kf.setImage(with: URL(string: userProfileImageContents ?? ""))
+        photoDetailView.profileNameLabel.text = userNameContents
+        photoDetailView.postDateLabel.text = "\(postDateContents?.toDate()?.toString() ?? "") 게시됨"
+        photoDetailView.photoImageView.kf.setImage(with: URL(string: imageURLContents ?? ""))
+        photoDetailView.sizeLabel.text = "\(imageWidthContents ?? 0) x \(imageHeightContents ?? 0)"
     }
     
     override func configureEssential() {

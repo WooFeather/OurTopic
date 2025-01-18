@@ -100,12 +100,12 @@ class PhotoDetailView: BaseView {
     }
     
     override func configureView() {
-        profileImageView.backgroundColor = .brown
+        profileImageView.backgroundColor = .gray
         DispatchQueue.main.async { [self] in
             profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+            profileImageView.clipsToBounds = true
         }
         
-        profileNameLabel.text = "Hi My Name is.."
         profileNameLabel.font = .systemFont(ofSize: 16)
         
         postDateLabel.text = "2024년 7월 3일 게시됨"
@@ -113,6 +113,7 @@ class PhotoDetailView: BaseView {
         
         photoImageView.backgroundColor = .gray
         photoImageView.contentMode = .scaleAspectFill
+        photoImageView.clipsToBounds = true
         
         infoTitleLabel.text = "정보"
         infoTitleLabel.font = .systemFont(ofSize: 20, weight: .heavy)
