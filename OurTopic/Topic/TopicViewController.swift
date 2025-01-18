@@ -101,4 +101,47 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
             return cell
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == topicView.firstTopicCollectionView {
+            let data = firstList[indexPath.item]
+            let vc = PhotoDetailViewController()
+            
+            vc.idContents = data.id
+            vc.imageURLContents = data.urls.full
+            vc.imageWidthContents = data.width
+            vc.imageHeightContents = data.height
+            vc.postDateContents = data.postDate
+            vc.userNameContents = data.user.name
+            vc.userProfileImageContents = data.user.profileImage.image
+            
+            navigationController?.pushViewController(vc, animated: true)
+        } else if collectionView == topicView.secondTopicCollectionView {
+            let data = secondList[indexPath.item]
+            let vc = PhotoDetailViewController()
+            
+            vc.idContents = data.id
+            vc.imageURLContents = data.urls.full
+            vc.imageWidthContents = data.width
+            vc.imageHeightContents = data.height
+            vc.postDateContents = data.postDate
+            vc.userNameContents = data.user.name
+            vc.userProfileImageContents = data.user.profileImage.image
+            
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let data = thirdList[indexPath.item]
+            let vc = PhotoDetailViewController()
+            
+            vc.idContents = data.id
+            vc.imageURLContents = data.urls.full
+            vc.imageWidthContents = data.width
+            vc.imageHeightContents = data.height
+            vc.postDateContents = data.postDate
+            vc.userNameContents = data.user.name
+            vc.userProfileImageContents = data.user.profileImage.image
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }

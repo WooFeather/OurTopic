@@ -78,20 +78,25 @@ class TopicView: BaseView {
     }
     
     override func configureView() {
+        scrollView.showsVerticalScrollIndicator = false
+        
         firstTopicLabel.text = "골든 아워"
         firstTopicLabel.font = .systemFont(ofSize: 19, weight: .heavy)
         
         firstTopicCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.id)
+        firstTopicCollectionView.showsHorizontalScrollIndicator = false
         
         secondTopicLabel.text = "비즈니스 및 업무"
         secondTopicLabel.font = .systemFont(ofSize: 19, weight: .heavy)
         
         secondTopicCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.id)
+        secondTopicCollectionView.showsHorizontalScrollIndicator = false
         
         thirdTopicLabel.text = "건축 및 인테리어"
         thirdTopicLabel.font = .systemFont(ofSize: 19, weight: .heavy)
         
         thirdTopicCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.id)
+        thirdTopicCollectionView.showsHorizontalScrollIndicator = false
     }
     
     func createCollectionViewLayout() -> UICollectionViewLayout {
