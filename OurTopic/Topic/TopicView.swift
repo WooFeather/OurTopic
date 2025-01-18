@@ -82,28 +82,25 @@ class TopicView: BaseView {
         firstTopicLabel.font = .systemFont(ofSize: 19, weight: .heavy)
         
         firstTopicCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.id)
-        firstTopicCollectionView.backgroundColor = .gray
         
         secondTopicLabel.text = "비즈니스 및 업무"
         secondTopicLabel.font = .systemFont(ofSize: 19, weight: .heavy)
         
         secondTopicCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.id)
-        secondTopicCollectionView.backgroundColor = .gray
         
         thirdTopicLabel.text = "건축 및 인테리어"
         thirdTopicLabel.font = .systemFont(ofSize: 19, weight: .heavy)
         
         thirdTopicCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.id)
-        thirdTopicCollectionView.backgroundColor = .gray
     }
     
     func createCollectionViewLayout() -> UICollectionViewLayout {
-        let sectionInset: CGFloat = 12
-        let cellSpacing: CGFloat = 8
+        let sectionInset: CGFloat = 17
+        let cellSpacing: CGFloat = 4
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 150, height: 250)
+        layout.itemSize = CGSize(width: 200, height: 250)
         layout.sectionInset = UIEdgeInsets(top: 0, left: sectionInset, bottom: 0, right: sectionInset)
         layout.minimumInteritemSpacing = cellSpacing
         return layout

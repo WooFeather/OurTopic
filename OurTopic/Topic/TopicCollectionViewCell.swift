@@ -35,6 +35,9 @@ class TopicCollectionViewCell: BaseCollectionViewCell {
     override func configureView() {
         photoImageView.backgroundColor = .brown
         photoImageView.contentMode = .scaleAspectFill
+        DispatchQueue.main.async {
+            self.photoImageView.layer.cornerRadius = self.photoImageView.frame.width / 16
+        }
         photoImageView.clipsToBounds = true
         
         starButton.setTitleColor(.white, for: .normal)

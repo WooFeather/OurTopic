@@ -38,16 +38,33 @@ class TopicViewController: BaseViewController {
     
     func callRequest() {
         let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
-        var lists = [firstList, secondList, thirdList]
         
-        for i in 0..<topicQuery.count {
-            NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[i]) { value in
-                lists[i] = value
-            }
+        // 이런식으로 반복문으로 하려고 했는데, reloadData 처리까지 잘 해준다고 했는데 왜 셀이 안떴을까???ㅜㅜ
+//        var lists = [firstList, secondList, thirdList]
+        
+//        for i in 0..<topicQuery.count {
+//            NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[i]) { value in
+//                lists[i] = value
+//            }
+//        }
+        
+        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[0]) { value in
+            self.firstList = value
+            self.topicView.firstTopicCollectionView.reloadData()
         }
+        
+        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[1]) { value in
+            self.secondList = value
+            self.topicView.secondTopicCollectionView.reloadData()
+        }
+        
+        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[2]) { value in
+            self.thirdList = value
+            self.topicView.thirdTopicCollectionView.reloadData()
+        }
+
     }
 }
-
 
 extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
