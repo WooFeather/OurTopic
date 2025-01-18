@@ -51,9 +51,12 @@ class SearchPhotoView: BaseView {
         sortButton.configuration = .sortButtonStyle()
         sortButton.setTitle(RequestSort.relevant.rawValue, for: .normal)
         sortButton.setTitle(RequestSort.latest.rawValue, for: .selected)
+        sortButton.backgroundColor = .white
         sortButton.layer.cornerRadius = 16
-        sortButton.layer.borderColor = UIColor.lightGray.cgColor
-        sortButton.layer.borderWidth = 1
+        sortButton.layer.shadowColor = UIColor.gray.cgColor
+        sortButton.layer.shadowOpacity = 1.0
+        sortButton.layer.shadowOffset = CGSize.zero
+        sortButton.layer.shadowRadius = 2
         
         mainLabel.text = "사진을 검색해보세요."
         mainLabel.font = .boldSystemFont(ofSize: 17)

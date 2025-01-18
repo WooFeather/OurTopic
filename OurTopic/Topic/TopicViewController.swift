@@ -9,21 +9,29 @@ import UIKit
 
 class TopicViewController: BaseViewController {
 
+    var firstList: [Topic] = []
+    var secondList: [Topic] = []
+    var thirdList: [Topic] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        callRequest()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func configureEssential() {
+        navigationItem.title = "OUR TOPIC"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
-    */
-
+    
+    func callRequest() {
+        let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
+        var lists = [firstList, secondList, thirdList]
+        
+        for i in 0..<topicQuery.count {
+            NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[i]) { value in
+                lists[i] = value
+            }
+        }
+    }
 }

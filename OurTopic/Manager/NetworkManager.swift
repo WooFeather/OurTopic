@@ -56,4 +56,26 @@ class NetworkManager {
                 }
             }
     }
+    
+    func callTopicPhotoAPI(topicId: String, completionHandler: @escaping ([Topic]) -> Void) {
+        let url = "https://api.unsplash.com/topics/\(topicId)/photos?page=1"
+        let header: HTTPHeaders = [
+            "Authorization": APIKey.unsplashAccessKey
+        ]
+        print(#function, url)
+        
+        AF.request(url, method: .get, headers: header)
+            .validate(statusCode: 200..<500)
+            .responseDecodable(of: [Topic].self) { response in
+                print(response.response?.statusCode ?? 000)
+                
+                switch response.result {
+                case .success(let value):
+                    print("✅SUCCESS")
+                    completionHandler(value)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+    }
 }
