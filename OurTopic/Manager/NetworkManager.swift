@@ -13,8 +13,8 @@ class NetworkManager {
     
     private init() { }
     
-    func callSearchPhotoAPI(query: String, page: Int, sort: RequestSort, completionHandler: @escaping (Photo) -> Void) {
-        let url = "https://api.unsplash.com/search/photos?query=\(query)&page=\(page)&per_page=20&order_by=\(sort)"
+    func callSearchPhotoAPI(query: String, page: Int, sort: RequestSort, color: String, completionHandler: @escaping (Photo) -> Void) {
+        let url = "https://api.unsplash.com/search/photos?query=\(query)&page=\(page)&per_page=20&order_by=\(sort)\(color)"
         let header: HTTPHeaders = [
             "Authorization": APIKey.unsplashAccessKey
         ]

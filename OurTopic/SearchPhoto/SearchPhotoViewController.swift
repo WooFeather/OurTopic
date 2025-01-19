@@ -30,8 +30,37 @@ class SearchPhotoViewController: BaseViewController {
         
         searchPhotoView.sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         
+        for i in 0..<searchPhotoView.buttonList.count {
+            searchPhotoView.buttonList[i].tag = i
+            searchPhotoView.buttonList[i].addTarget(self, action: #selector(colorFilterButtonTapped), for: .touchUpInside)
+        }
+        
         if list.isEmpty {
             searchPhotoView.photoCollectionView.isHidden = true
+        }
+    }
+    
+    // 한 버튼을 탭했을때 다른 버튼 isSelected를 false로 만들어주기 어떻게할까나
+    @objc
+    func colorFilterButtonTapped(_ sender: UIButton) {
+        print(sender.tag)
+        
+        let colorButton = ColorFilter.allCases
+        
+        switch sender.tag {
+        case 0...6:
+            if queryText.isEmpty || searchPhotoView.photoCollectionView.isHidden {
+                print("네트워크 통신 시도 X")
+            } else {
+                sender.isSelected.toggle()
+                if sender.isSelected {
+                    callRequest(query: queryText, sort: .relevant, color: colorButton[sender.tag].urlString)
+                } else {
+                    callRequest(query: queryText, sort: .relevant)
+                }
+            }
+        default:
+            callRequest(query: queryText, sort: .relevant)
         }
     }
     
@@ -52,8 +81,8 @@ class SearchPhotoViewController: BaseViewController {
         }
     }
     
-    func callRequest(query: String, sort: RequestSort) {
-        NetworkManager.shared.callSearchPhotoAPI(query: query, page: page, sort: sort) { value in
+    func callRequest(query: String, sort: RequestSort, color: String = "") {
+        NetworkManager.shared.callSearchPhotoAPI(query: query, page: page, sort: sort, color: color) { value in
             
             if self.page == 1 {
                 self.list = value.results

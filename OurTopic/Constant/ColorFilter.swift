@@ -53,4 +53,23 @@ enum ColorFilter: CaseIterable {
             return .blue
         }
     }
+    
+    var urlString: String {
+        switch self {
+        case .black:
+            return "&color=black"
+        case .white:
+            return "&color=white"
+        case .yellow:
+            return "&color=yellow"
+        case .red:
+            return "&color=red"
+        case .purple:
+            return "&color=purple"
+        case .green:
+            return "&color=green"
+        case .blue:
+            return "&color=blue"
+        }
+    }
 }

@@ -16,6 +16,8 @@ class SearchPhotoView: BaseView {
     let sortButton = UIButton()
     let mainLabel = UILabel()
     lazy var photoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+    var buttonList: [UIButton] = []
+    
     
     override func configureHierarchy() {
         addSubview(photoSearchBar)
@@ -40,7 +42,8 @@ class SearchPhotoView: BaseView {
         
         buttonStackView.snp.makeConstraints { make in
             make.verticalEdges.equalTo(buttonScrollView)
-            make.horizontalEdges.equalTo(buttonScrollView).inset(12)
+            make.leading.equalTo(buttonScrollView).offset(12)
+            make.trailing.equalTo(buttonScrollView).offset(-80)
             make.height.equalTo(35)
         }
         
@@ -92,8 +95,8 @@ class SearchPhotoView: BaseView {
         let colorButton = ColorFilter.allCases
         
         for i in 0..<7 {
-            let colorFilterButton = ColorFilterButton(title: colorButton[i].title, color: colorButton[i].color)
-            buttonStackView.addArrangedSubview(colorFilterButton)
+            buttonList.append(ColorFilterButton(title: colorButton[i].title, color: colorButton[i].color))
+            buttonStackView.addArrangedSubview(buttonList[i])
         }
     }
     
