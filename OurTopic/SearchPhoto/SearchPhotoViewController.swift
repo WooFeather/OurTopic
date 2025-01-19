@@ -49,7 +49,7 @@ class SearchPhotoViewController: BaseViewController {
         
         switch sender.tag {
         case 0...6:
-            if queryText.isEmpty || searchPhotoView.photoCollectionView.isHidden {
+            if queryText.isEmpty {
                 print("네트워크 통신 시도 X")
             } else {
                 sender.isSelected.toggle()
