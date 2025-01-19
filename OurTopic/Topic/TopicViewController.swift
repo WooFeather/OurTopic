@@ -26,8 +26,9 @@ class TopicViewController: BaseViewController {
     }
     
     override func configureEssential() {
-        navigationItem.title = "OUR TOPIC"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        // 처음엔 navigationTitle로 했다가, push로 이동한 뷰에서도 safeArea를 LargeTitle만큼 잡고있어서 그냥 Label로 변경했습니다.
+//        navigationItem.title = "OUR TOPIC"
+//        navigationController?.navigationBar.prefersLargeTitles = true
         topicView.firstTopicCollectionView.delegate = self
         topicView.firstTopicCollectionView.dataSource = self
         topicView.secondTopicCollectionView.delegate = self
