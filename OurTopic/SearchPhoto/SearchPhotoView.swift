@@ -11,12 +11,16 @@ import SnapKit
 class SearchPhotoView: BaseView {
     
     let photoSearchBar = UISearchBar()
+    let buttonScrollView = UIScrollView()
+    let buttonStackView = UIStackView()
     let sortButton = UIButton()
     let mainLabel = UILabel()
     lazy var photoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
     override func configureHierarchy() {
         addSubview(photoSearchBar)
+        addSubview(buttonScrollView)
+        buttonScrollView.addSubview(buttonStackView)
         addSubview(sortButton)
         addSubview(mainLabel)
         addSubview(photoCollectionView)
@@ -28,8 +32,22 @@ class SearchPhotoView: BaseView {
             make.height.equalTo(44)
         }
         
-        sortButton.snp.makeConstraints { make in
+        buttonScrollView.snp.makeConstraints { make in
             make.top.equalTo(photoSearchBar.snp.bottom).offset(4)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(35)
+        }
+        
+        buttonStackView.snp.makeConstraints { make in
+            make.verticalEdges.equalTo(buttonScrollView)
+            make.horizontalEdges.equalTo(buttonScrollView).inset(12)
+            make.height.equalTo(35)
+        }
+        
+        buttonStackView.spacing = 10
+        
+        sortButton.snp.makeConstraints { make in
+            make.centerY.equalTo(buttonScrollView.snp.centerY)
             make.trailing.equalToSuperview().offset(12)
             make.height.equalTo(30)
         }
@@ -48,6 +66,10 @@ class SearchPhotoView: BaseView {
     override func configureView() {
         photoSearchBar.placeholder = "키워드 검색"
         
+        buttonScrollView.showsHorizontalScrollIndicator = false
+        
+        configureColorFilterButton()
+        
         sortButton.configuration = .sortButtonStyle()
         sortButton.setTitle(RequestSort.relevant.rawValue, for: .normal)
         sortButton.setTitle(RequestSort.latest.rawValue, for: .selected)
@@ -63,6 +85,16 @@ class SearchPhotoView: BaseView {
         
         photoCollectionView.register(SearchPhotoCollectionViewCell.self, forCellWithReuseIdentifier: SearchPhotoCollectionViewCell.id)
         photoCollectionView.keyboardDismissMode = .onDrag
+    }
+    
+    func configureColorFilterButton() {
+        
+        let colorButton = ColorFilter.allCases
+        
+        for i in 0..<7 {
+            let colorFilterButton = ColorFilterButton(title: colorButton[i].title, color: colorButton[i].color)
+            buttonStackView.addArrangedSubview(colorFilterButton)
+        }
     }
     
     func createCollectionViewLayout() -> UICollectionViewLayout {

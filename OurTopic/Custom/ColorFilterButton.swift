@@ -13,7 +13,7 @@ class ColorFilterButton: UIButton {
         
         configuration = .colorFilterButtonStyle()
         
-        setTitle("\(title)    ", for: .normal)
+        setTitle("\(title)", for: .normal)
         let image = UIImage(systemName: "circle.fill")?.withRenderingMode(.alwaysTemplate)
         setImage(image, for: .normal)
         tintColor = color
