@@ -27,4 +27,26 @@ extension UIButton.Configuration {
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12)
         return configuration
     }
+    
+    static func colorFilterButtonStyle() -> UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 15)
+        configuration.preferredSymbolConfigurationForImage = imageConfig
+        configuration.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12)
+        return configuration
+    }
+}
+
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
+        
+        let backgroundImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+         
+        self.setBackgroundImage(backgroundImage, for: state)
+    }
 }
