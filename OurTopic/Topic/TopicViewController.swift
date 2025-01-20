@@ -49,21 +49,32 @@ class TopicViewController: BaseViewController {
 //            }
 //        }
         
+        let group = DispatchGroup()
+        
+        group.enter()
         NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[0]) { value in
             self.firstList = value
-            self.topicView.firstTopicCollectionView.reloadData()
+            group.leave()
         }
         
+        group.enter()
         NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[1]) { value in
             self.secondList = value
-            self.topicView.secondTopicCollectionView.reloadData()
+            group.leave()
         }
         
+        group.enter()
         NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[2]) { value in
             self.thirdList = value
-            self.topicView.thirdTopicCollectionView.reloadData()
+            group.leave()
         }
 
+        group.notify(queue: .main) {
+            print("네트워크 통신 완료")
+            self.topicView.firstTopicCollectionView.reloadData()
+            self.topicView.secondTopicCollectionView.reloadData()
+            self.topicView.thirdTopicCollectionView.reloadData()
+        }
     }
 }
 
