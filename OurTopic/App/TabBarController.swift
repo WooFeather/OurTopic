@@ -20,7 +20,7 @@ class TabBarController: UITabBarController {
         tabBar.delegate = self
         
         let firstVC = TopicViewController()
-        let secondVC = SecondViewController()
+        let secondVC = RandomPhotoViewController()
         let thirdVC = SearchPhotoViewController()
         let fourthVC = FourthViewController()
         
