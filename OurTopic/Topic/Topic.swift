@@ -7,6 +7,7 @@
 
 import Foundation
 
+// PhotoDetail 구조체 재사용하자!
 struct Topic: Decodable {
     let id: String
     let postDate: String
