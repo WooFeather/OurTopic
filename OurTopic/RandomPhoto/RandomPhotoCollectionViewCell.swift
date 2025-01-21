@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+import SnapKit
 
 class RandomPhotoCollectionViewCell: BaseCollectionViewCell {
     
@@ -13,20 +15,22 @@ class RandomPhotoCollectionViewCell: BaseCollectionViewCell {
     
     var randomImageView = UIImageView()
     
-    
     override func configureHierarchy() {
-        <#code#>
+        contentView.addSubview(randomImageView)
     }
     
     override func configureLayout() {
-        <#code#>
+        randomImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     override func configureView() {
-        <#code#>
+        randomImageView.backgroundColor = .brown
+        randomImageView.contentMode = .scaleAspectFill
     }
     
-    func configureData() {
-        
+    func configureData(data: PhotoDetail) {
+        randomImageView.kf.setImage(with: URL(string: data.urls.regular))
     }
 }

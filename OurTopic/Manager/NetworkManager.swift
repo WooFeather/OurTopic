@@ -18,7 +18,7 @@ class NetworkManager {
             .validate(statusCode: 200..<500)
             .responseDecodable(of: Photo.self) { response in
                 print(response.response?.statusCode ?? 000)
-                print(response.response?.url)
+                print(response.response?.url ?? "")
                 
                 switch response.result {
                 case .success(let value):
@@ -54,7 +54,7 @@ class NetworkManager {
             .validate(statusCode: 200..<500)
             .responseDecodable(of: [PhotoDetail].self) { response in
                 print(response.response?.statusCode ?? 000)
-                print(response.response?.url)
+                print(response.response?.url ?? "")
                 
                 switch response.result {
                 case .success(let value):

@@ -39,6 +39,7 @@ struct PhotoDetail: Decodable {
 
 struct PhotoURL: Decodable {
     let full: String
+    let regular: String
     let thumb: String
 }
 

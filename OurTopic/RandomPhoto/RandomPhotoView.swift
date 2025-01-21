@@ -13,30 +13,29 @@ class RandomPhotoView: BaseView {
     lazy var randomPhotoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
     override func configureHierarchy() {
-        <#code#>
+        addSubview(randomPhotoCollectionView)
     }
     
     override func configureLayout() {
-        <#code#>
+        randomPhotoCollectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     override func configureView() {
-        <#code#>
+        randomPhotoCollectionView.register(RandomPhotoCollectionViewCell.self, forCellWithReuseIdentifier: RandomPhotoCollectionViewCell.id)
+        randomPhotoCollectionView.showsVerticalScrollIndicator = false
+        randomPhotoCollectionView.isPagingEnabled = true
     }
     
     // 수정예정
     func createCollectionViewLayout() -> UICollectionViewLayout {
-        let sectionInset: CGFloat = 0
-        let cellSpacing: CGFloat = 10
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
-        let deviceWidth = UIScreen.main.bounds.width
-        let cellWidth = deviceWidth - (sectionInset * 2) - (cellSpacing)
-        
-        layout.itemSize = CGSize(width: cellWidth / 2, height: (cellWidth / 2) * 1.5)
-        layout.sectionInset = UIEdgeInsets(top: sectionInset, left: sectionInset, bottom: sectionInset, right: sectionInset)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 0
         return layout
     }
 }

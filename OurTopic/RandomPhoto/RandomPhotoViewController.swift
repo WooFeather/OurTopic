@@ -10,6 +10,7 @@ import UIKit
 class RandomPhotoViewController: BaseViewController {
 
     var randomPhotoView = RandomPhotoView()
+    var list: [PhotoDetail] = []
     
     override func loadView() {
         view = randomPhotoView
@@ -17,11 +18,39 @@ class RandomPhotoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        callRequest()
     }
     
     override func configureEssential() {
-        <#code#>
+        randomPhotoView.randomPhotoCollectionView.delegate = self
+        randomPhotoView.randomPhotoCollectionView.dataSource  = self
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    func callRequest() {
+        NetworkManager.shared.callTopicPhotoAPI(api: .randomPhoto) { value in
+            self.list = value
+            self.randomPhotoView.randomPhotoCollectionView.reloadData()
+        } failHandler: {
+            print("fail!")
+        }
+    }
+}
+
+extension RandomPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return list.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = randomPhotoView.randomPhotoCollectionView.dequeueReusableCell(withReuseIdentifier: RandomPhotoCollectionViewCell.id, for: indexPath) as? RandomPhotoCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        let data = list[indexPath.item]
+        
+        cell.configureData(data: data)
+        
+        return cell
     }
 }

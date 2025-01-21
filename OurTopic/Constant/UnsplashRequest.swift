@@ -12,6 +12,7 @@ enum UnsplashRequest {
     case searchPhoto(query: String, page: Int, sort: RequestSort, color: String)
     case photoStatistics(id: String)
     case topicPhoto(topicId: String)
+    case randomPhoto
     
     var baseURL: String {
         return "https://api.unsplash.com/"
@@ -25,6 +26,8 @@ enum UnsplashRequest {
             return URL(string: baseURL + "photos/\(id)/statistics")!
         case .topicPhoto(let topicId):
             return URL(string: baseURL + "topics/\(topicId)/photos")!
+        case .randomPhoto:
+            return URL(string: baseURL + "photos/random")!
         }
     }
     
@@ -47,6 +50,10 @@ enum UnsplashRequest {
         case .topicPhoto:
             return [
                 "page": "1"
+            ]
+        case .randomPhoto:
+            return [
+                "count": "10"
             ]
         }
     }
