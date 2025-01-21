@@ -49,7 +49,7 @@ class PhotoDetailViewController: BaseViewController {
             return
         }
         
-        NetworkManager.shared.callPhotoStatisticsAPI(id: id) { value in
+        NetworkManager.shared.callPhotoStatisticsAPI(api: .photoStatistics(id: id)) { value in
             
             for i in 0..<value.views.historical.values.count {
                 self.monthViews += value.views.historical.values[i].value

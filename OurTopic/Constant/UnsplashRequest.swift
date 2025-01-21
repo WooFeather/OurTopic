@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-enum UnplashRequest {
+enum UnsplashRequest {
     case searchPhoto(query: String, page: Int, sort: RequestSort, color: String)
     case photoStatistics(id: String)
     case topicPhoto(topicId: String)
@@ -19,8 +19,8 @@ enum UnplashRequest {
     
     var endpoint: URL {
         switch self {
-        case .searchPhoto:
-            return URL(string: baseURL + "search/photos")!
+        case .searchPhoto(let query, let page, let sort, let color):
+            return URL(string: baseURL + "search/photos?query=\(query)&page=\(page)&order_by=\(sort)&\(color)")!
         case .photoStatistics(let id):
             return URL(string: baseURL + "photos/\(id)/statistics")!
         case .topicPhoto(let topicId):
@@ -38,17 +38,13 @@ enum UnplashRequest {
     
     var parameter: Parameters {
         switch self {
-        case .searchPhoto(let query, let page, let sort, let color):
+        case .searchPhoto:
             return [
-                "query": query,
-                "page": page,
-                "per_page": 20,
-                "order_by": sort,
-                "color": color
+                "per_page": "20"
             ]
-        case .photoStatistics(id: let id):
+        case .photoStatistics:
             return [:]
-        case .topicPhoto(topicId: let topicId):
+        case .topicPhoto:
             return [
                 "page": "1"
             ]

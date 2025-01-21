@@ -82,7 +82,7 @@ class SearchPhotoViewController: BaseViewController {
     }
     
     func callRequest(query: String, sort: RequestSort, color: String = "") {
-        NetworkManager.shared.callSearchPhotoAPI(query: query, page: page, sort: sort, color: color) { value in
+        NetworkManager.shared.callSearchPhotoAPI(api: .searchPhoto(query: query, page: page, sort: sort, color: color)) { value in
             
             if self.page == 1 {
                 self.list = value.results

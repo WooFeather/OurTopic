@@ -52,7 +52,7 @@ class TopicViewController: BaseViewController {
         let group = DispatchGroup()
         
         group.enter()
-        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[0]) { value in
+        NetworkManager.shared.callTopicPhotoAPI(api: .topicPhoto(topicId: topicQuery[0])) { value in
             self.firstList = value
             group.leave()
         } failHandler: {
@@ -60,7 +60,7 @@ class TopicViewController: BaseViewController {
         }
         
         group.enter()
-        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[1]) { value in
+        NetworkManager.shared.callTopicPhotoAPI(api: .topicPhoto(topicId: topicQuery[1])) { value in
             self.secondList = value
             group.leave()
         } failHandler: {
@@ -68,7 +68,7 @@ class TopicViewController: BaseViewController {
         }
         
         group.enter()
-        NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[2]) { value in
+        NetworkManager.shared.callTopicPhotoAPI(api: .topicPhoto(topicId: topicQuery[2])) { value in
             self.thirdList = value
             group.leave()
         } failHandler: {
