@@ -57,7 +57,11 @@ class NetworkManager {
             }
     }
     
-    func callTopicPhotoAPI(topicId: String, completionHandler: @escaping ([Topic]) -> Void) {
+    func callTopicPhotoAPI(
+        topicId: String,
+        completionHandler: @escaping ([Topic]) -> Void,
+        failHandler: @escaping () -> Void
+    ) {
         let url = "https://api.unsplash.com/topics/\(topicId)/photos?page=1"
         let header: HTTPHeaders = [
             "Authorization": APIKey.unsplashAccessKey

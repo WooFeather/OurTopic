@@ -55,17 +55,23 @@ class TopicViewController: BaseViewController {
         NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[0]) { value in
             self.firstList = value
             group.leave()
+        } failHandler: {
+            
         }
         
         group.enter()
         NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[1]) { value in
             self.secondList = value
             group.leave()
+        } failHandler: {
+            group.leave()
         }
         
         group.enter()
         NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[2]) { value in
             self.thirdList = value
+            group.leave()
+        } failHandler: {
             group.leave()
         }
 
