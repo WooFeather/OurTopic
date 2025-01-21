@@ -49,7 +49,7 @@ class TopicCollectionViewCell: BaseCollectionViewCell {
         starButton.isUserInteractionEnabled = false
     }
     
-    func configureData(data: Topic) {
+    func configureData(data: PhotoDetail) {
         let formattedCount = NumberFormattingManager.shared.numberFormatting(number: data.likes)
         photoImageView.kf.setImage(with: URL(string: data.urls.thumb))
         starButton.setTitle("\(formattedCount ?? "")", for: .normal)

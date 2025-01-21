@@ -11,9 +11,9 @@ class TopicViewController: BaseViewController {
 
     var topicView = TopicView()
     
-    var firstList: [Topic] = []
-    var secondList: [Topic] = []
-    var thirdList: [Topic] = []
+    var firstList: [PhotoDetail] = []
+    var secondList: [PhotoDetail] = []
+    var thirdList: [PhotoDetail] = []
     
     override func loadView() {
         view = topicView

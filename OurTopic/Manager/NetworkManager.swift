@@ -59,7 +59,7 @@ class NetworkManager {
     
     func callTopicPhotoAPI(
         topicId: String,
-        completionHandler: @escaping ([Topic]) -> Void,
+        completionHandler: @escaping ([PhotoDetail]) -> Void,
         failHandler: @escaping () -> Void
     ) {
         let url = "https://api.unsplash.com/topics/\(topicId)/photos?page=1"
@@ -70,7 +70,7 @@ class NetworkManager {
         
         AF.request(url, method: .get, headers: header)
             .validate(statusCode: 200..<500)
-            .responseDecodable(of: [Topic].self) { response in
+            .responseDecodable(of: [PhotoDetail].self) { response in
                 print(response.response?.statusCode ?? 000)
                 
                 switch response.result {
