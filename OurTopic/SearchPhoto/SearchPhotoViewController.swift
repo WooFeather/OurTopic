@@ -21,6 +21,12 @@ final class SearchPhotoViewController: BaseViewController {
         view = searchPhotoView
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        searchPhotoView.photoSearchBar.becomeFirstResponder()
+    }
+    
     override func configureEssential() {
         navigationItem.title = "SEARCH PHOTO"
         searchPhotoView.photoSearchBar.delegate = self
@@ -185,6 +191,6 @@ extension SearchPhotoViewController: UISearchBarDelegate {
             }
         }
         
-        view.endEditing(true)
+        searchPhotoView.photoSearchBar.resignFirstResponder()
     }
 }

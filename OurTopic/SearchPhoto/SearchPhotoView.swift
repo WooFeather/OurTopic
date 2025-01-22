@@ -19,7 +19,6 @@ final class SearchPhotoView: BaseView {
     private let buttonScrollView = UIScrollView()
     private let buttonStackView = UIStackView()
     
-    
     override func configureHierarchy() {
         addSubview(photoSearchBar)
         addSubview(buttonScrollView)
