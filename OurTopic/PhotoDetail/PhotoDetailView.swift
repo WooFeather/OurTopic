@@ -18,26 +18,41 @@ final class PhotoDetailView: BaseView {
     let viewsLabel = UILabel()
     let downloadLabel = UILabel()
     
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     private let infoTitleLabel = UILabel()
     private let infoSizeLabel = UILabel()
     private let infoViewsLabel = UILabel()
     private let infoDownloadLabel = UILabel()
     
     override func configureHierarchy() {
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
         [profileImageView, profileNameLabel, postDateLabel, photoImageView, infoTitleLabel, infoSizeLabel, infoViewsLabel, infoDownloadLabel, sizeLabel, viewsLabel, downloadLabel].forEach {
-            addSubview($0)
+            contentView.addSubview($0)
         }
     }
     
     override func configureLayout() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.width.equalTo(scrollView.snp.width)
+            make.verticalEdges.equalTo(scrollView)
+        }
+        
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
-            make.leading.equalToSuperview().offset(12)
+            make.top.equalTo(contentView)
+            make.leading.equalTo(contentView).offset(12)
             make.size.equalTo(40)
         }
         
         profileNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(4)
+            make.top.equalTo(contentView).offset(4)
             make.leading.equalTo(profileImageView.snp.trailing).offset(8)
             make.height.equalTo(18)
         }
@@ -50,8 +65,9 @@ final class PhotoDetailView: BaseView {
         
         photoImageView.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(12)
-            make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(400)
+            make.horizontalEdges.equalTo(contentView)
+            make.bottom.equalTo(infoTitleLabel.snp.top).offset(-16)
+            make.height.equalTo(1000)
         }
         
         infoTitleLabel.snp.makeConstraints { make in
@@ -95,7 +111,7 @@ final class PhotoDetailView: BaseView {
         
         downloadLabel.snp.makeConstraints { make in
             make.centerY.equalTo(infoDownloadLabel.snp.centerY)
-            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.trailing.equalTo(contentView).inset(16)
             make.height.equalTo(17)
         }
     }
