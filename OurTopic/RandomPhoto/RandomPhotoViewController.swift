@@ -28,7 +28,7 @@ class RandomPhotoViewController: BaseViewController {
     }
     
     func callRequest() {
-        NetworkManager.shared.callTopicPhotoAPI(api: .randomPhoto) { value in
+        NetworkManager.shared.callUnsplashAPI(api: .randomPhoto, type: [PhotoDetail].self) { value in
             self.list = value
             self.randomPhotoView.randomPhotoCollectionView.reloadData()
         } failHandler: {

@@ -15,6 +15,9 @@ class TopicViewController: BaseViewController {
     var secondList: [PhotoDetail] = []
     var thirdList: [PhotoDetail] = []
     
+    let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
+    lazy var lists = [firstList, secondList, thirdList]
+    
     override func loadView() {
         view = topicView
     }
@@ -38,41 +41,18 @@ class TopicViewController: BaseViewController {
     }
     
     func callRequest() {
-        let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
-        
-        // 이런식으로 반복문으로 하려고 했는데, reloadData 처리까지 잘 해준다고 했는데 왜 셀이 안떴을까???ㅜㅜ
-//        var lists = [firstList, secondList, thirdList]
-        
-//        for i in 0..<topicQuery.count {
-//            NetworkManager.shared.callTopicPhotoAPI(topicId: topicQuery[i]) { value in
-//                lists[i] = value
-//            }
-//        }
         
         let group = DispatchGroup()
         
-        group.enter()
-        NetworkManager.shared.callTopicPhotoAPI(api: .topicPhoto(topicId: topicQuery[0])) { value in
-            self.firstList = value
-            group.leave()
-        } failHandler: {
-            
-        }
-        
-        group.enter()
-        NetworkManager.shared.callTopicPhotoAPI(api: .topicPhoto(topicId: topicQuery[1])) { value in
-            self.secondList = value
-            group.leave()
-        } failHandler: {
-            group.leave()
-        }
-        
-        group.enter()
-        NetworkManager.shared.callTopicPhotoAPI(api: .topicPhoto(topicId: topicQuery[2])) { value in
-            self.thirdList = value
-            group.leave()
-        } failHandler: {
-            group.leave()
+        for i in 0..<topicQuery.count {
+            group.enter()
+            NetworkManager.shared.callUnsplashAPI(api: .topicPhoto(topicId: topicQuery[i]), type: [PhotoDetail].self) { value in
+                self.lists[i] = value
+                group.leave()
+            } failHandler: {
+                print("Fail!!")
+                group.leave()
+            }
         }
 
         group.notify(queue: .main) {
@@ -87,11 +67,11 @@ class TopicViewController: BaseViewController {
 extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.topicView.firstTopicCollectionView {
-            return firstList.count
+            return lists[0].count
         } else if collectionView == self.topicView.secondTopicCollectionView {
-            return secondList.count
+            return lists[1].count
         } else {
-            return thirdList.count
+            return lists[2].count
         }
     }
     
@@ -99,21 +79,21 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         if collectionView == self.topicView.firstTopicCollectionView {
             guard let cell = topicView.firstTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             
-            let data = firstList[indexPath.item]
+            let data = lists[0][indexPath.item]
             cell.configureData(data: data)
             
             return cell
         } else if collectionView == self.topicView.secondTopicCollectionView {
             guard let cell = topicView.secondTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             
-            let data = secondList[indexPath.item]
+            let data = lists[1][indexPath.item]
             cell.configureData(data: data)
             
             return cell
         } else {
             guard let cell = topicView.thirdTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             
-            let data = thirdList[indexPath.item]
+            let data = lists[2][indexPath.item]
             cell.configureData(data: data)
             
             return cell
@@ -122,7 +102,7 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == topicView.firstTopicCollectionView {
-            let data = firstList[indexPath.item]
+            let data = lists[0][indexPath.item]
             let vc = PhotoDetailViewController()
             
             vc.idContents = data.id
@@ -135,7 +115,7 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
             
             navigationController?.pushViewController(vc, animated: true)
         } else if collectionView == topicView.secondTopicCollectionView {
-            let data = secondList[indexPath.item]
+            let data = lists[1][indexPath.item]
             let vc = PhotoDetailViewController()
             
             vc.idContents = data.id
@@ -148,7 +128,7 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
             
             navigationController?.pushViewController(vc, animated: true)
         } else {
-            let data = thirdList[indexPath.item]
+            let data = lists[2][indexPath.item]
             let vc = PhotoDetailViewController()
             
             vc.idContents = data.id

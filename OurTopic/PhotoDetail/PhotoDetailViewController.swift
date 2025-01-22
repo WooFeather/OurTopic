@@ -48,8 +48,8 @@ class PhotoDetailViewController: BaseViewController {
             print("id 가져오기 실패")
             return
         }
-        
-        NetworkManager.shared.callPhotoStatisticsAPI(api: .photoStatistics(id: id)) { value in
+
+        NetworkManager.shared.callUnsplashAPI(api: .photoStatistics(id: id), type: Statistics.self) { value in
             
             for i in 0..<value.views.historical.values.count {
                 self.monthViews += value.views.historical.values[i].value
@@ -64,6 +64,8 @@ class PhotoDetailViewController: BaseViewController {
             
             let formattedDownloads = NumberFormattingManager.shared.numberFormatting(number: self.monthDownloads)
             self.photoDetailView.downloadLabel.text = "\(formattedDownloads ?? "")"
+        } failHandler: {
+            print("Fail!!!")
         }
     }
 }

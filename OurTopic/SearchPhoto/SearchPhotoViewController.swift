@@ -82,7 +82,7 @@ class SearchPhotoViewController: BaseViewController {
     }
     
     func callRequest(query: String, sort: RequestSort, color: String = "") {
-        NetworkManager.shared.callSearchPhotoAPI(api: .searchPhoto(query: query, page: page, sort: sort, color: color)) { value in
+        NetworkManager.shared.callUnsplashAPI(api: .searchPhoto(query: query, page: page, sort: sort, color: color), type: Photo.self) { value in
             
             if self.page == 1 {
                 self.list = value.results
@@ -103,6 +103,8 @@ class SearchPhotoViewController: BaseViewController {
             if self.page == 1 && self.list.count != 0 {
                 self.searchPhotoView.photoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
             }
+        } failHandler: {
+            print("Fail!")
         }
     }
 }
