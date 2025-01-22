@@ -103,8 +103,12 @@ class SearchPhotoViewController: BaseViewController {
             if self.page == 1 && self.list.count != 0 {
                 self.searchPhotoView.photoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
             }
-        } failHandler: {
-            print("Fail!")
+        } failHandler: { statusCode in
+            let title = NetworkStatus(rawValue: statusCode)?.title ?? "정의되지 않은 ERROR"
+            let message = NetworkStatus(rawValue: statusCode)?.message ?? "예상치 못한 에러입니다."
+            self.showAlert(title: title, message: message, button: "닫기") {
+                self.dismiss(animated: true)
+            }
         }
     }
 }

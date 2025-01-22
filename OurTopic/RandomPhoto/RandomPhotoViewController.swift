@@ -31,8 +31,12 @@ class RandomPhotoViewController: BaseViewController {
         NetworkManager.shared.callUnsplashAPI(api: .randomPhoto, type: [PhotoDetail].self) { value in
             self.list = value
             self.randomPhotoView.randomPhotoCollectionView.reloadData()
-        } failHandler: {
-            print("fail!")
+        } failHandler: { statusCode in
+            let title = NetworkStatus(rawValue: statusCode)?.title ?? "정의되지 않은 ERROR"
+            let message = NetworkStatus(rawValue: statusCode)?.message ?? "예상치 못한 에러입니다."
+            self.showAlert(title: title, message: message, button: "닫기") {
+                self.dismiss(animated: true)
+            }
         }
     }
 }

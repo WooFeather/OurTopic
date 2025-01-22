@@ -49,14 +49,17 @@ class TopicViewController: BaseViewController {
             NetworkManager.shared.callUnsplashAPI(api: .topicPhoto(topicId: topicQuery[i]), type: [PhotoDetail].self) { value in
                 self.lists[i] = value
                 group.leave()
-            } failHandler: {
-                print("Fail!!")
-                group.leave()
+            } failHandler: { statusCode in
+                let title = NetworkStatus(rawValue: statusCode)?.title ?? "정의되지 않은 ERROR"
+                let message = NetworkStatus(rawValue: statusCode)?.message ?? "예상치 못한 에러입니다."
+                self.showAlert(title: title, message: message, button: "닫기") {
+                    self.dismiss(animated: true)
+                }
             }
         }
 
         group.notify(queue: .main) {
-            print("네트워크 통신 완료")
+            print("네트워크 통신 종료")
             self.topicView.firstTopicCollectionView.reloadData()
             self.topicView.secondTopicCollectionView.reloadData()
             self.topicView.thirdTopicCollectionView.reloadData()

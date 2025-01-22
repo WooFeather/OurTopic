@@ -64,8 +64,12 @@ class PhotoDetailViewController: BaseViewController {
             
             let formattedDownloads = NumberFormattingManager.shared.numberFormatting(number: self.monthDownloads)
             self.photoDetailView.downloadLabel.text = "\(formattedDownloads ?? "")"
-        } failHandler: {
-            print("Fail!!!")
+        } failHandler: { statusCode in
+            let title = NetworkStatus(rawValue: statusCode)?.title ?? "정의되지 않은 ERROR"
+            let message = NetworkStatus(rawValue: statusCode)?.message ?? "예상치 못한 에러입니다."
+            self.showAlert(title: title, message: message, button: "닫기") {
+                self.dismiss(animated: true)
+            }
         }
     }
 }
