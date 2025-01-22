@@ -14,7 +14,7 @@ enum UnsplashRequest {
     case topicPhoto(topicId: String)
     case randomPhoto
     
-    var baseURL: String {
+    private var baseURL: String {
         return "https://api.unsplash.com/"
     }
     

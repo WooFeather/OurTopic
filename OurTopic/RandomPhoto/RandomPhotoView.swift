@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class RandomPhotoView: BaseView {
+final class RandomPhotoView: BaseView {
     
     lazy var randomPhotoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
@@ -30,8 +30,7 @@ class RandomPhotoView: BaseView {
         randomPhotoCollectionView.contentInsetAdjustmentBehavior = .never
     }
     
-    // 수정예정
-    func createCollectionViewLayout() -> UICollectionViewLayout {
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         

@@ -9,11 +9,11 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class TopicCollectionViewCell: BaseCollectionViewCell {
+final class TopicCollectionViewCell: BaseCollectionViewCell {
     static let id = "TopicCollectionViewCell"
     
-    var photoImageView = UIImageView()
-    let starButton = UIButton()
+    private var photoImageView = UIImageView()
+    private let starButton = UIButton()
     
     override func configureHierarchy() {
         contentView.addSubview(photoImageView)

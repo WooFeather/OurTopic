@@ -7,15 +7,15 @@
 
 import UIKit
 
-class SearchPhotoViewController: BaseViewController {
+final class SearchPhotoViewController: BaseViewController {
     
-    var searchPhotoView = SearchPhotoView()
-    var list: [PhotoDetail] = []
+    private var searchPhotoView = SearchPhotoView()
+    private var list: [PhotoDetail] = []
     
-    var page = 1
-    var maxNum = 0
+    private var page = 1
+    private var maxNum = 0
     
-    lazy var queryText = searchPhotoView.photoSearchBar.text?.trimmingCharacters(in: .whitespaces) ?? ""
+    private lazy var queryText = searchPhotoView.photoSearchBar.text?.trimmingCharacters(in: .whitespaces) ?? ""
     
     override func loadView() {
         view = searchPhotoView
@@ -42,7 +42,7 @@ class SearchPhotoViewController: BaseViewController {
     
     // 한 버튼을 탭했을때 다른 버튼 isSelected를 false로 만들어주기 어떻게할까나
     @objc
-    func colorFilterButtonTapped(_ sender: UIButton) {
+    private func colorFilterButtonTapped(_ sender: UIButton) {
         print(sender.tag)
         
         let colorButton = ColorFilter.allCases
@@ -65,7 +65,7 @@ class SearchPhotoViewController: BaseViewController {
     }
     
     @objc
-    func sortButtonTapped() {
+    private func sortButtonTapped() {
         searchPhotoView.sortButton.isSelected.toggle()
         
         if queryText.isEmpty || searchPhotoView.photoCollectionView.isHidden {
@@ -81,7 +81,7 @@ class SearchPhotoViewController: BaseViewController {
         }
     }
     
-    func callRequest(query: String, sort: RequestSort, color: String = "") {
+    private func callRequest(query: String, sort: RequestSort, color: String = "") {
         NetworkManager.shared.callUnsplashAPI(api: .searchPhoto(query: query, page: page, sort: sort, color: color), type: Photo.self) { value in
             
             if self.page == 1 {

@@ -8,15 +8,16 @@
 import UIKit
 import SnapKit
 
-class SearchPhotoView: BaseView {
+final class SearchPhotoView: BaseView {
     
     let photoSearchBar = UISearchBar()
-    let buttonScrollView = UIScrollView()
-    let buttonStackView = UIStackView()
     let sortButton = UIButton()
     let mainLabel = UILabel()
     lazy var photoCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     var buttonList: [UIButton] = []
+    
+    private let buttonScrollView = UIScrollView()
+    private let buttonStackView = UIStackView()
     
     
     override func configureHierarchy() {
@@ -90,7 +91,7 @@ class SearchPhotoView: BaseView {
         photoCollectionView.keyboardDismissMode = .onDrag
     }
     
-    func configureColorFilterButton() {
+    private func configureColorFilterButton() {
         
         let colorButton = ColorFilter.allCases
         
@@ -100,7 +101,7 @@ class SearchPhotoView: BaseView {
         }
     }
     
-    func createCollectionViewLayout() -> UICollectionViewLayout {
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
         let sectionInset: CGFloat = 0
         let cellSpacing: CGFloat = 10
         

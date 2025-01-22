@@ -7,10 +7,10 @@
 
 import UIKit
 
-class RandomPhotoViewController: BaseViewController {
+final class RandomPhotoViewController: BaseViewController {
 
-    var randomPhotoView = RandomPhotoView()
-    var list: [PhotoDetail] = []
+    private var randomPhotoView = RandomPhotoView()
+    private var list: [PhotoDetail] = []
     
     override func loadView() {
         view = randomPhotoView
@@ -27,7 +27,7 @@ class RandomPhotoViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    func callRequest() {
+    private func callRequest() {
         NetworkManager.shared.callUnsplashAPI(api: .randomPhoto, type: [PhotoDetail].self) { value in
             self.list = value
             self.randomPhotoView.randomPhotoCollectionView.reloadData()

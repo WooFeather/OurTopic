@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class PhotoDetailViewController: BaseViewController {
+final class PhotoDetailViewController: BaseViewController {
 
     var idContents: String?
     var imageURLContents: String?
@@ -18,10 +18,9 @@ class PhotoDetailViewController: BaseViewController {
     var userNameContents: String?
     var userProfileImageContents: String?
     
-    var monthViews = 0
-    var monthDownloads = 0
-    
-    var photoDetailView = PhotoDetailView()
+    private var monthViews = 0
+    private var monthDownloads = 0
+    private var photoDetailView = PhotoDetailView()
     
     override func loadView() {
         view = photoDetailView
@@ -43,7 +42,7 @@ class PhotoDetailViewController: BaseViewController {
         photoDetailView.sizeLabel.text = "\(imageWidthContents ?? 0) x \(imageHeightContents ?? 0)"
     }
     
-    func callRequest() {
+    private func callRequest() {
         guard let id = idContents else {
             print("id 가져오기 실패")
             return

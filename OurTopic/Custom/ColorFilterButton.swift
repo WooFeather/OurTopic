@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ColorFilterButton: UIButton {
+final class ColorFilterButton: UIButton {
     init(title: String, color: UIColor) {
         super.init(frame: .zero)
         

@@ -7,16 +7,16 @@
 
 import UIKit
 
-class TopicViewController: BaseViewController {
+final class TopicViewController: BaseViewController {
 
-    var topicView = TopicView()
+    private var topicView = TopicView()
     
-    var firstList: [PhotoDetail] = []
-    var secondList: [PhotoDetail] = []
-    var thirdList: [PhotoDetail] = []
+    private var firstList: [PhotoDetail] = []
+    private var secondList: [PhotoDetail] = []
+    private var thirdList: [PhotoDetail] = []
     
-    let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
-    lazy var lists = [firstList, secondList, thirdList]
+    private let topicQuery = ["golden-hour", "business-work", "architecture-interior"]
+    private lazy var lists = [firstList, secondList, thirdList]
     
     override func loadView() {
         view = topicView
@@ -40,7 +40,7 @@ class TopicViewController: BaseViewController {
         topicView.thirdTopicCollectionView.dataSource = self
     }
     
-    func callRequest() {
+    private func callRequest() {
         
         let group = DispatchGroup()
         

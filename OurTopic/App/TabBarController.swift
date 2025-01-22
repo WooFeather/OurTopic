@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +16,7 @@ class TabBarController: UITabBarController {
         setupTabBarAppearance()
     }
     
-    func configureTabBarController() {
+    private func configureTabBarController() {
         tabBar.delegate = self
         
         let firstVC = TopicViewController()
@@ -37,7 +37,7 @@ class TabBarController: UITabBarController {
         setViewControllers([firstNav, secondNav, thirdNav, fourthNav], animated: true)
     }
     
-    func setupTabBarAppearance() {
+    private func setupTabBarAppearance() {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
         appearance.backgroundColor = .white

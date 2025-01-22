@@ -9,11 +9,11 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class RandomPhotoCollectionViewCell: BaseCollectionViewCell {
+final class RandomPhotoCollectionViewCell: BaseCollectionViewCell {
     
     static let id = "RandomPhotoCollectionViewCell"
     
-    var randomImageView = UIImageView()
+    private var randomImageView = UIImageView()
     
     override func configureHierarchy() {
         contentView.addSubview(randomImageView)

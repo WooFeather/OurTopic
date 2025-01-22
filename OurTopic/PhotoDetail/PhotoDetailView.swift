@@ -8,19 +8,20 @@
 import UIKit
 import SnapKit
 
-class PhotoDetailView: BaseView {
+final class PhotoDetailView: BaseView {
     
     let profileImageView = UIImageView()
     let profileNameLabel = UILabel()
     let postDateLabel = UILabel()
     let photoImageView = UIImageView()
-    let infoTitleLabel = UILabel()
-    let infoSizeLabel = UILabel()
-    let infoViewsLabel = UILabel()
-    let infoDownloadLabel = UILabel()
     let sizeLabel = UILabel()
     let viewsLabel = UILabel()
     let downloadLabel = UILabel()
+    
+    private let infoTitleLabel = UILabel()
+    private let infoSizeLabel = UILabel()
+    private let infoViewsLabel = UILabel()
+    private let infoDownloadLabel = UILabel()
     
     override func configureHierarchy() {
         [profileImageView, profileNameLabel, postDateLabel, photoImageView, infoTitleLabel, infoSizeLabel, infoViewsLabel, infoDownloadLabel, sizeLabel, viewsLabel, downloadLabel].forEach {

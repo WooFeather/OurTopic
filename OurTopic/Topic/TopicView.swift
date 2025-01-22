@@ -8,15 +8,15 @@
 import UIKit
 import SnapKit
 
-class TopicView: BaseView {
+final class TopicView: BaseView {
     
-    let scrollView = UIScrollView()
-    let contentView = UIView()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    private let navigationLabel = UILabel()
+    private let firstTopicLabel = UILabel()
+    private let secondTopicLabel = UILabel()
+    private let thirdTopicLabel = UILabel()
     
-    let navigationLabel = UILabel()
-    let firstTopicLabel = UILabel()
-    let secondTopicLabel = UILabel()
-    let thirdTopicLabel = UILabel()
     lazy var firstTopicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     lazy var secondTopicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     lazy var thirdTopicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
@@ -111,7 +111,7 @@ class TopicView: BaseView {
         thirdTopicCollectionView.showsHorizontalScrollIndicator = false
     }
     
-    func createCollectionViewLayout() -> UICollectionViewLayout {
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
         let sectionInset: CGFloat = 17
         let cellSpacing: CGFloat = 4
         

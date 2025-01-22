@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 import UIKit
 
-class NetworkManager {
+final class NetworkManager {
     static let shared = NetworkManager()
     
     private init() { }
