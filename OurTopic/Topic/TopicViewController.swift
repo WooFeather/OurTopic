@@ -25,6 +25,9 @@ final class TopicViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        print("♥️lists[0] \(self.lists[0])")
+//        print("💙firstList\(self.firstList)")
+        
         callRequest()
     }
     
@@ -49,6 +52,8 @@ final class TopicViewController: BaseViewController {
             NetworkManager.shared.callUnsplashAPI(api: .topicPhoto(topicId: topicQuery[i]), type: [PhotoDetail].self) { value in
                 self.lists[i] = value
                 group.leave()
+//                print("♥️lists[0] \(self.lists[0])")
+//                print("💙firstList\(self.firstList)")
             } failHandler: { statusCode in
                 let title = NetworkStatus(rawValue: statusCode)?.title ?? "정의되지 않은 ERROR"
                 let message = NetworkStatus(rawValue: statusCode)?.message ?? "예상치 못한 에러입니다."
@@ -63,6 +68,9 @@ final class TopicViewController: BaseViewController {
             self.topicView.firstTopicCollectionView.reloadData()
             self.topicView.secondTopicCollectionView.reloadData()
             self.topicView.thirdTopicCollectionView.reloadData()
+            
+//            print("♥️lists[0] \(self.lists[0])")
+//            print("💙firstList\(self.firstList)")
         }
     }
 }
@@ -80,6 +88,10 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.topicView.firstTopicCollectionView {
+            
+//            print("♥️lists[0] \(self.lists[0])")
+//            print("💙firstList\(self.firstList)")
+            
             guard let cell = topicView.firstTopicCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.id, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             
             let data = lists[0][indexPath.item]
