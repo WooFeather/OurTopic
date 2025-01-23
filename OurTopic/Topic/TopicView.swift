@@ -12,7 +12,6 @@ final class TopicView: BaseView {
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
-    private let navigationLabel = UILabel()
     private let firstTopicLabel = UILabel()
     private let secondTopicLabel = UILabel()
     private let thirdTopicLabel = UILabel()
@@ -22,7 +21,6 @@ final class TopicView: BaseView {
     lazy var thirdTopicCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
     override func configureHierarchy() {
-        addSubview(navigationLabel)
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -32,14 +30,8 @@ final class TopicView: BaseView {
     }
     
     override func configureLayout() {
-        navigationLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(30)
-            make.leading.equalToSuperview().offset(17)
-            make.height.equalTo(30)
-        }
-        
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(navigationLabel.snp.bottom).offset(12)
+            make.top.equalTo(safeAreaLayoutGuide)
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
         }
         
@@ -87,9 +79,6 @@ final class TopicView: BaseView {
     }
     
     override func configureView() {
-        navigationLabel.text = "OUR TOPIC"
-        navigationLabel.font = .systemFont(ofSize: 28, weight: .bold)
-        
         scrollView.showsVerticalScrollIndicator = false
         
         firstTopicLabel.text = "골든 아워"

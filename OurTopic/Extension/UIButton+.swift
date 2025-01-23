@@ -35,6 +35,13 @@ extension UIButton.Configuration {
         configuration.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12)
         return configuration
     }
+    
+    static func profileButton() -> UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 30)
+        configuration.preferredSymbolConfigurationForImage = imageConfig
+        return configuration
+    }
 }
 
 extension UIButton {

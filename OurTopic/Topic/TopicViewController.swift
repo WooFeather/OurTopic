@@ -32,15 +32,20 @@ final class TopicViewController: BaseViewController {
     }
     
     override func configureEssential() {
-        // 처음엔 navigationTitle로 했다가, push로 이동한 뷰에서도 safeArea를 LargeTitle만큼 잡고있어서 그냥 Label로 변경했습니다.
-//        navigationItem.title = "OUR TOPIC"
-//        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "OUR TOPIC"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .done, target: self, action: #selector(profileButtonTapped)), animated: true)
         topicView.firstTopicCollectionView.delegate = self
         topicView.firstTopicCollectionView.dataSource = self
         topicView.secondTopicCollectionView.delegate = self
         topicView.secondTopicCollectionView.dataSource = self
         topicView.thirdTopicCollectionView.delegate = self
         topicView.thirdTopicCollectionView.dataSource = self
+    }
+    
+    @objc private func profileButtonTapped() {
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func callRequest() {

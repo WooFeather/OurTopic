@@ -32,6 +32,10 @@ final class PhotoDetailViewController: BaseViewController {
         callRequest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationItem.largeTitleDisplayMode = .never
+    }
+    
     override func configureView() {
         super.configureView()
         
