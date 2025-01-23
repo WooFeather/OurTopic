@@ -19,7 +19,7 @@ final class RandomPhotoView: BaseView {
     override func configureLayout() {
         randomPhotoCollectionView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-54)
+            make.bottom.equalToSuperview().offset(-80)
         }
     }
     
@@ -34,7 +34,7 @@ final class RandomPhotoView: BaseView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 54)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 80)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         return layout

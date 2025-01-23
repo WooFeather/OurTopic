@@ -21,10 +21,19 @@ final class RandomPhotoViewController: BaseViewController {
         callRequest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     override func configureEssential() {
         randomPhotoView.randomPhotoCollectionView.delegate = self
         randomPhotoView.randomPhotoCollectionView.dataSource  = self
-        navigationController?.navigationBar.isHidden = true
     }
     
     private func callRequest() {
@@ -56,5 +65,21 @@ extension RandomPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         cell.configureData(data: data)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = list[indexPath.item]
+        
+        let vc = PhotoDetailViewController()
+        
+        vc.idContents = data.id
+        vc.imageURLContents = data.urls.full
+        vc.imageWidthContents = data.width
+        vc.imageHeightContents = data.height
+        vc.postDateContents = data.postDate
+        vc.userNameContents = data.user.name
+        vc.userProfileImageContents = data.user.profileImage.image
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
