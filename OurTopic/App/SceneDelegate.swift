@@ -16,9 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let initialViewController = OnboardingViewController()
-        window?.rootViewController = initialViewController
-        window?.makeKeyAndVisible()
+        let isSigned = UserDefaultsManager.shared.isSigned
+        
+        if isSigned {
+            let initialViewController = TabBarController()
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        } else {
+            let initialViewController = OnboardingViewController()
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -23,8 +23,10 @@ class ProfileViewController: UIViewController {
         configureView()
     }
 
-    @objc func okButtonTapped() {
-        print(#function)
+    @objc func resignButtonTapped() {
+        showAlert(title: "탈퇴하시겠습니까?", message: "모든 회원정보가 삭제되고\n회원가입화면으로 이동합니다.", button: "회원탈퇴", isCancelButton: true, buttonStyle: .destructive) {
+            self.changeRootViewController(vc: OnboardingViewController(), isSigned: false)
+        }
     }
     
     @objc private func nicknameButtonTapped() {
@@ -44,7 +46,7 @@ class ProfileViewController: UIViewController {
     
     func configureView() {
         navigationItem.title = "프로필 화면"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(okButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴하기", style: .plain, target: self, action: #selector(resignButtonTapped))
         view.backgroundColor = .white
         
         view.addSubview(nicknameButton)

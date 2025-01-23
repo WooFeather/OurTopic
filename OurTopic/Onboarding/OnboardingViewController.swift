@@ -15,6 +15,8 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserDefaultsManager.shared.isSigned = false
+        
         view.backgroundColor = .darkGray
         view.addSubview(button)
         
@@ -32,10 +34,6 @@ class OnboardingViewController: UIViewController {
     }
     
     @objc func buttonTapped() {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first else { return }
-        
-        window.rootViewController = TabBarController()
-        window.makeKeyAndVisible()
+        changeRootViewController(vc: TabBarController(), isSigned: true)
     }
 }
