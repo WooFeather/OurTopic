@@ -67,7 +67,7 @@ final class PhotoDetailView: BaseView {
             make.top.equalTo(profileImageView.snp.bottom).offset(12)
             make.horizontalEdges.equalTo(contentView)
             make.bottom.equalTo(infoTitleLabel.snp.top).offset(-16)
-            make.height.equalTo(1000)
+            make.height.equalTo(500)
         }
         
         infoTitleLabel.snp.makeConstraints { make in

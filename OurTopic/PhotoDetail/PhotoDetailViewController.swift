@@ -9,18 +9,9 @@ import UIKit
 import Kingfisher
 
 final class PhotoDetailViewController: BaseViewController {
-
-    var idContents: String?
-    var imageURLContents: String?
-    var imageWidthContents: Int?
-    var imageHeightContents: Int?
-    var postDateContents: String?
-    var userNameContents: String?
-    var userProfileImageContents: String?
     
-    private var monthViews = 0
-    private var monthDownloads = 0
     private var photoDetailView = PhotoDetailView()
+    let viewModel = PhotoDetailViewModel()
     
     override func loadView() {
         view = photoDetailView
@@ -29,49 +20,49 @@ final class PhotoDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        callRequest()
+        bindData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.largeTitleDisplayMode = .never
     }
     
-    override func configureView() {
-        super.configureView()
+    private func bindData() {
+        viewModel.input.viewDidLoadTrigger.value = ()
         
-        photoDetailView.profileImageView.kf.setImage(with: URL(string: userProfileImageContents ?? ""))
-        photoDetailView.profileNameLabel.text = userNameContents
-        photoDetailView.postDateLabel.text = "\(postDateContents?.toDate()?.toString() ?? "") 게시됨"
-        photoDetailView.photoImageView.kf.setImage(with: URL(string: imageURLContents ?? ""))
-        photoDetailView.sizeLabel.text = "\(imageWidthContents ?? 0) x \(imageHeightContents ?? 0)"
-    }
-    
-    private func callRequest() {
-        guard let id = idContents else {
-            print("id 가져오기 실패")
-            return
+        viewModel.output.monthViews.bind { text in
+            self.photoDetailView.viewsLabel.text = text
         }
-
-        NetworkManager.shared.callUnsplashAPI(api: .photoStatistics(id: id), type: Statistics.self) { value in
-            
-            for i in 0..<value.views.historical.values.count {
-                self.monthViews += value.views.historical.values[i].value
-            }
-            
-            let formattedViews = NumberFormattingManager.shared.numberFormatting(number: self.monthViews)
-            self.photoDetailView.viewsLabel.text = "\(formattedViews ?? "")"
-            
-            for i in 0..<value.downloads.historical.values.count {
-                self.monthDownloads += value.downloads.historical.values[i].value
-            }
-            
-            let formattedDownloads = NumberFormattingManager.shared.numberFormatting(number: self.monthDownloads)
-            self.photoDetailView.downloadLabel.text = "\(formattedDownloads ?? "")"
-        } failHandler: { statusCode in
-            let title = NetworkStatus(rawValue: statusCode)?.title ?? "정의되지 않은 ERROR"
-            let message = NetworkStatus(rawValue: statusCode)?.message ?? "예상치 못한 에러입니다."
-            self.showAlert(title: title, message: message, button: "닫기") {
+        
+        viewModel.output.monthDownloads.bind { text in
+            self.photoDetailView.downloadLabel.text = text
+        }
+        
+        viewModel.output.failHandler.lazyBind { _ in
+            self.showAlert(title: self.viewModel.failAlertTitle, message: self.viewModel.failAlertMessage, button: "닫기") {
                 self.dismiss(animated: true)
+            }
+        }
+        
+        viewModel.output.userProfileImageContents.bind { text in
+            self.photoDetailView.profileImageView.kf.setImage(with: URL(string: text ?? ""))
+        }
+        
+        viewModel.output.userNameContents.bind { text in
+            self.photoDetailView.profileNameLabel.text = text
+        }
+        
+        viewModel.output.postDateContents.bind { text in
+            self.photoDetailView.postDateLabel.text = "\(text?.toDate()?.toString() ?? "") 게시됨"
+        }
+        
+        viewModel.output.imageURLContents.bind { text in
+            self.photoDetailView.photoImageView.kf.setImage(with: URL(string: text ?? ""))
+        }
+        
+        viewModel.output.imageWidthContents.bind { width in
+            self.viewModel.output.imageHeightContents.bind { height in
+                self.photoDetailView.sizeLabel.text = "\(width ?? 0) x \(height ?? 0)"
             }
         }
     }

@@ -125,39 +125,39 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
             let data = lists[0][indexPath.item]
             let vc = PhotoDetailViewController()
             
-            vc.idContents = data.id
-            vc.imageURLContents = data.urls.full
-            vc.imageWidthContents = data.width
-            vc.imageHeightContents = data.height
-            vc.postDateContents = data.postDate
-            vc.userNameContents = data.user.name
-            vc.userProfileImageContents = data.user.profileImage.image
+            vc.viewModel.output.idContents.value = data.id
+            vc.viewModel.output.imageURLContents.value = data.urls.full
+            vc.viewModel.output.imageWidthContents.value = data.width
+            vc.viewModel.output.imageHeightContents.value = data.height
+            vc.viewModel.output.postDateContents.value = data.postDate
+            vc.viewModel.output.userNameContents.value = data.user.name
+            vc.viewModel.output.userProfileImageContents.value = data.user.profileImage.image
             
             navigationController?.pushViewController(vc, animated: true)
         } else if collectionView == topicView.secondTopicCollectionView {
             let data = lists[1][indexPath.item]
             let vc = PhotoDetailViewController()
             
-            vc.idContents = data.id
-            vc.imageURLContents = data.urls.full
-            vc.imageWidthContents = data.width
-            vc.imageHeightContents = data.height
-            vc.postDateContents = data.postDate
-            vc.userNameContents = data.user.name
-            vc.userProfileImageContents = data.user.profileImage.image
+            vc.viewModel.output.idContents.value = data.id
+            vc.viewModel.output.imageURLContents.value = data.urls.full
+            vc.viewModel.output.imageWidthContents.value = data.width
+            vc.viewModel.output.imageHeightContents.value = data.height
+            vc.viewModel.output.postDateContents.value = data.postDate
+            vc.viewModel.output.userNameContents.value = data.user.name
+            vc.viewModel.output.userProfileImageContents.value = data.user.profileImage.image
             
             navigationController?.pushViewController(vc, animated: true)
         } else {
             let data = lists[2][indexPath.item]
             let vc = PhotoDetailViewController()
             
-            vc.idContents = data.id
-            vc.imageURLContents = data.urls.full
-            vc.imageWidthContents = data.width
-            vc.imageHeightContents = data.height
-            vc.postDateContents = data.postDate
-            vc.userNameContents = data.user.name
-            vc.userProfileImageContents = data.user.profileImage.image
+            vc.viewModel.output.idContents.value = data.id
+            vc.viewModel.output.imageURLContents.value = data.urls.full
+            vc.viewModel.output.imageWidthContents.value = data.width
+            vc.viewModel.output.imageHeightContents.value = data.height
+            vc.viewModel.output.postDateContents.value = data.postDate
+            vc.viewModel.output.userNameContents.value = data.user.name
+            vc.viewModel.output.userProfileImageContents.value = data.user.profileImage.image
             
             navigationController?.pushViewController(vc, animated: true)
         }
