@@ -47,7 +47,7 @@ final class PhotoDetailViewModel: BaseViewModel {
     
     // MARK: - Functions
     func transform() {
-        self.input.viewDidLoadTrigger.bind { _ in
+        self.input.viewDidLoadTrigger.lazyBind { _ in
             self.callRequest()
         }
     }
